@@ -23,6 +23,10 @@ class ListingsResponse(BaseModel):
     listings: list[Listing]
 
 
+class ListingCount(BaseModel):
+    count: int
+
+
 class FilterOption(BaseModel):
     value: str
     count: int

@@ -22,6 +22,7 @@ class ListingFilters:
     max_price: int | None = None
     bedrooms: tuple[int, ...] = ()
     bathrooms: tuple[float, ...] = ()
+    min_sqft: int | None = None
     cities: tuple[str, ...] = ()
     property_types: tuple[str, ...] = ()
 
@@ -40,6 +41,11 @@ def list_listings(
         (*params, limit),
     ).fetchall()
     return _with_photos(conn, rows)
+
+
+def count_listings(conn: sqlite3.Connection, filters: ListingFilters = ListingFilters()) -> int:
+    where, params = _where(filters)
+    return conn.execute(f"SELECT COUNT(*) FROM listings WHERE {where}", params).fetchone()[0]
 
 
 def get_listing(conn: sqlite3.Connection, listing_id: str) -> dict | None:
@@ -93,6 +99,8 @@ def _where(filters: ListingFilters) -> tuple[str, list]:
         add(f"{BEDROOMS} IN ({_placeholders(filters.bedrooms)})", *filters.bedrooms)
     if filters.bathrooms:
         add(f"bathrooms IN ({_placeholders(filters.bathrooms)})", *filters.bathrooms)
+    if filters.min_sqft is not None:
+        add("sqft >= ?", filters.min_sqft)
     if filters.cities:
         add(f"city IN ({_placeholders(filters.cities)})", *filters.cities)
     if filters.property_types:
