@@ -1,9 +1,10 @@
+import { listingPath, type ListingLinkState } from '../../../app/paths'
+import { ListingFacts } from '../../../components/listing/ListingFacts'
+import { ListingPrice } from '../../../components/listing/ListingPrice'
 import { Badge } from '../../../components/ui/Badge'
-import { ExternalButtonLink } from '../../../components/ui/ExternalButtonLink'
-import { formatCurrency } from '../../../lib/format'
+import { ButtonLink } from '../../../components/ui/ButtonLink'
 import { getLocality } from '../../../lib/listing'
 import type { Listing } from '../../../types/listing'
-import { ListingFacts } from './ListingFacts'
 
 type ListingDetailsProps = {
   listing: Listing
@@ -29,12 +30,7 @@ export function ListingDetails({ listing }: ListingDetailsProps) {
         )}
       </div>
 
-      {listing.priceCad !== null && (
-        <p>
-          <span className="text-display">{formatCurrency(listing.priceCad, 'CAD')}</span>
-          <span className="text-sm text-muted"> / month</span>
-        </p>
-      )}
+      <ListingPrice listing={listing} />
 
       <hr className="w-full border-line" />
 
@@ -44,9 +40,14 @@ export function ListingDetails({ listing }: ListingDetailsProps) {
         <p className="line-clamp-2 text-sm leading-normal text-muted">{listing.description}</p>
       )}
 
-      <ExternalButtonLink href={listing.url} icon="arrowRight" className="w-full">
-        View on Craigslist
-      </ExternalButtonLink>
+      <ButtonLink
+        to={listingPath(listing.id)}
+        state={{ from: 'discover' } satisfies ListingLinkState}
+        icon="arrowRight"
+        className="w-full"
+      >
+        View apartment
+      </ButtonLink>
     </div>
   )
 }

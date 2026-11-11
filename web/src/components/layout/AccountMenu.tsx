@@ -16,7 +16,7 @@ export function AccountMenu({ user }: AccountMenuProps) {
     >
       <Avatar name={user?.name} />
       {user?.name}
-      <Icon name="chevronDown" />
+      <Icon name="chevronDown" size={16} />
     </button>
   )
 }

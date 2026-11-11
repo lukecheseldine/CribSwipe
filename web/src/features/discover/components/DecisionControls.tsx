@@ -13,7 +13,7 @@ export function DecisionControls({ onPass, onLike }: DecisionControlsProps) {
         <Button icon="x" variant="destructive" className="flex-1" onClick={onPass}>
           Pass
         </Button>
-        <Button icon="heartWhite" variant="primary" className="flex-1" onClick={onLike}>
+        <Button icon="heart" variant="primary" className="flex-1" onClick={onLike}>
           Like
         </Button>
       </div>

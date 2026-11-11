@@ -1,8 +1,19 @@
+import { emptyFilters } from '../lib/filters'
+import type { FilterOption, FilterOptions, ListingFilters } from '../types/filters'
 import type { Listing } from '../types/listing'
 
 export const listingsRegion = 'Vancouver, BC'
 
-// Mirrors backend/app/listings/schemas.py.
+// These mirror backend/app/listings/schemas.py.
+type ApiFilterOptions = {
+  cities: FilterOption[]
+  property_types: FilterOption[]
+  bedrooms: FilterOption<number>[]
+  bathrooms: FilterOption<number>[]
+  min_price: number | null
+  max_price: number | null
+}
+
 type ApiListing = {
   id: string
   url: string
@@ -49,9 +60,47 @@ function toListing(row: ApiListing): Listing {
   }
 }
 
-export async function getListings(): Promise<Listing[]> {
-  const response = await fetch('/api/listings')
+function toQuery(filters: ListingFilters) {
+  const query = new URLSearchParams()
+  if (filters.maxPrice !== null) query.set('max_price', String(filters.maxPrice))
+  const lists = {
+    bedrooms: filters.bedrooms,
+    bathrooms: filters.bathrooms,
+    city: filters.cities,
+    property_type: filters.propertyTypes,
+  }
+  for (const [key, values] of Object.entries(lists)) {
+    values.forEach((value) => query.append(key, String(value)))
+  }
+  return query
+}
+
+export async function getListings(filters: ListingFilters = emptyFilters): Promise<Listing[]> {
+  const query = toQuery(filters).toString()
+  const response = await fetch(query ? `/api/listings?${query}` : '/api/listings')
   if (!response.ok) throw new Error(`Failed to load listings (${response.status})`)
   const body: { listings: ApiListing[] } = await response.json()
   return body.listings.map(toListing)
+}
+
+export async function getFilterOptions(): Promise<FilterOptions> {
+  const response = await fetch('/api/listings/filter-options')
+  if (!response.ok) throw new Error(`Failed to load filter options (${response.status})`)
+  const body: ApiFilterOptions = await response.json()
+  return {
+    cities: body.cities,
+    propertyTypes: body.property_types,
+    bedrooms: body.bedrooms,
+    bathrooms: body.bathrooms,
+    minPrice: body.min_price,
+    maxPrice: body.max_price,
+  }
+}
+
+/** Resolves to null when the listing doesn't exist. */
+export async function getListing(id: string): Promise<Listing | null> {
+  const response = await fetch(`/api/listings/${encodeURIComponent(id)}`)
+  if (response.status === 404) return null
+  if (!response.ok) throw new Error(`Failed to load listing (${response.status})`)
+  return toListing(await response.json())
 }

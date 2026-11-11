@@ -1,12 +1,12 @@
 import { NavLink } from 'react-router'
 import { paths } from '../../app/paths'
-import type { IconName } from '../../assets/icons'
 import { cn } from '../../lib/cn'
 import { Icon } from '../ui/Icon'
+import type { IconName } from '../ui/icons'
 
 const navItems: { to: string; label: string; icon: IconName }[] = [
   { to: paths.discover, label: 'Discover', icon: 'layers' },
-  { to: paths.shortlist, label: 'Your shortlist', icon: 'heartMuted' },
+  { to: paths.shortlist, label: 'Your shortlist', icon: 'heart' },
   { to: paths.account, label: 'Account', icon: 'userRound' },
 ]
 

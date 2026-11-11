@@ -1,4 +1,5 @@
 import { preload } from 'react-dom'
+import { ListingImage } from '../../../components/listing/ListingImage'
 import { Badge } from '../../../components/ui/Badge'
 import { Button } from '../../../components/ui/Button'
 import { CarouselArrows } from '../../../components/ui/CarouselArrows'
@@ -27,18 +28,7 @@ export function ListingPhoto({
 
   return (
     <div className={cn('relative min-w-0 bg-canvas', className)}>
-      {photo ? (
-        <img
-          src={photo}
-          alt={`Photo ${carousel.index + 1} of ${listing.title}`}
-          draggable={false}
-          className="absolute inset-0 size-full object-cover"
-        />
-      ) : (
-        <p className="flex size-full items-center justify-center text-sm text-muted">
-          No photos provided
-        </p>
-      )}
+      <ListingImage src={photo} alt={`Photo ${carousel.index + 1} of ${listing.title}`} />
       {isJustListed(listing) && (
         <div className="absolute top-6 left-6">
           <Badge icon="sparkles">Just listed</Badge>

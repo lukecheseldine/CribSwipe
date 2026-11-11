@@ -1,10 +1,12 @@
-import type { IconName } from '../../../assets/icons'
-import { Icon } from '../../../components/ui/Icon'
-import { pluralize } from '../../../lib/format'
-import type { Listing } from '../../../types/listing'
+import { cn } from '../../lib/cn'
+import { pluralize } from '../../lib/format'
+import type { Listing } from '../../types/listing'
+import { Icon } from '../ui/Icon'
+import type { IconName } from '../ui/icons'
 
 type ListingFactsProps = {
   listing: Listing
+  className?: string
 }
 
 function getFacts({ bedrooms, bathrooms, sqft }: Listing) {
@@ -15,15 +17,15 @@ function getFacts({ bedrooms, bathrooms, sqft }: Listing) {
   return facts
 }
 
-export function ListingFacts({ listing }: ListingFactsProps) {
+export function ListingFacts({ listing, className }: ListingFactsProps) {
   const facts = getFacts(listing)
   if (facts.length === 0) return null
 
   return (
-    <ul className="flex flex-wrap gap-6 text-label text-muted">
+    <ul className={cn('flex flex-wrap gap-6 text-label text-muted', className)}>
       {facts.map(({ icon, label }) => (
         <li key={icon} className="flex items-center gap-1.75">
-          <Icon name={icon} />
+          <Icon name={icon} size={18} className="text-brand" />
           {label}
         </li>
       ))}

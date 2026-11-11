@@ -15,6 +15,7 @@ export function useCarousel(count: number) {
     nextIndex: canNavigate ? (index + 1) % count : index,
     next: () => step(1),
     previous: () => step(-1),
+    goTo: (target: number) => setIndex(Math.min(Math.max(target, 0), Math.max(count - 1, 0))),
   }
 }
 

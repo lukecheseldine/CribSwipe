@@ -1,31 +1,24 @@
-import type { AnchorHTMLAttributes } from 'react'
-import type { IconName } from '../../assets/icons'
+import { Link, type LinkProps } from 'react-router'
 import { buttonClasses, type ButtonVariant } from './buttonStyles'
 import { Icon } from './Icon'
+import type { IconName } from './icons'
 
-type ButtonLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
-  href: string
+type ButtonLinkProps = LinkProps & {
   icon?: IconName
   variant?: ButtonVariant
-  external?: boolean
 }
 
 export function ButtonLink({
   icon,
   variant = 'secondary',
-  external = false,
   className,
   children,
   ...props
 }: ButtonLinkProps) {
   return (
-    <a
-      className={buttonClasses(variant, className)}
-      {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
-      {...props}
-    >
+    <Link className={buttonClasses(variant, className)} {...props}>
       {icon && <Icon name={icon} />}
       {children}
-    </a>
+    </Link>
   )
 }

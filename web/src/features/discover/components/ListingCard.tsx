@@ -1,8 +1,7 @@
-import { useState } from 'react'
 import { Card } from '../../../components/ui/Card'
 import { PhotoLightbox } from '../../../components/ui/PhotoLightbox'
-import { useCarousel } from '../../../hooks/useCarousel'
 import { useKeyboardShortcuts } from '../../../hooks/useKeyboardShortcuts'
+import { usePhotoViewer } from '../../../hooks/usePhotoViewer'
 import { useSwipe } from '../../../hooks/useSwipe'
 import type { Listing } from '../../../types/listing'
 import type { Decision } from '../types'
@@ -16,15 +15,14 @@ type ListingCardProps = {
 }
 
 export function ListingCard({ listing, onDecision }: ListingCardProps) {
-  const photoCarousel = useCarousel(listing.photos.length)
-  const [isFullscreen, setIsFullscreen] = useState(false)
+  const viewer = usePhotoViewer(listing.photos.length)
   const { swipe, handlers, style } = useSwipe({
     onSwipe: (direction) => onDecision(direction === 'right' ? 'like' : 'pass'),
   })
   const pass = () => swipe('left')
   const like = () => swipe('right')
 
-  useKeyboardShortcuts({ ArrowLeft: pass, ArrowRight: like }, { enabled: !isFullscreen })
+  useKeyboardShortcuts({ ArrowLeft: pass, ArrowRight: like }, { enabled: !viewer.isOpen })
 
   return (
     <>
@@ -37,8 +35,8 @@ export function ListingCard({ listing, onDecision }: ListingCardProps) {
       >
         <ListingPhoto
           listing={listing}
-          carousel={photoCarousel}
-          onOpenFullscreen={() => setIsFullscreen(true)}
+          carousel={viewer.carousel}
+          onOpenFullscreen={() => viewer.open()}
           className="flex-1"
         />
         <div className="flex w-117 shrink-0 flex-col justify-between gap-4 p-9">
@@ -47,10 +45,10 @@ export function ListingCard({ listing, onDecision }: ListingCardProps) {
         </div>
       </Card>
       <PhotoLightbox
-        open={isFullscreen}
-        onClose={() => setIsFullscreen(false)}
+        open={viewer.isOpen}
+        onClose={viewer.close}
         photos={listing.photos}
-        carousel={photoCarousel}
+        carousel={viewer.carousel}
         title={listing.title}
       />
     </>

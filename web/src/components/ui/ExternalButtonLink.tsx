@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes } from 'react'
-import type { IconName } from '../../assets/icons'
+import type { IconName } from './icons'
 import { buttonClasses, type ButtonVariant } from './buttonStyles'
 import { Icon } from './Icon'
 

@@ -1,21 +1,21 @@
-import { icons, type IconName } from '../../assets/icons'
 import { cn } from '../../lib/cn'
+import { icons, type IconName } from './icons'
 
 type IconProps = {
   name: IconName
+  size?: number
   className?: string
 }
 
-export function Icon({ name, className }: IconProps) {
-  const { src, size } = icons[name]
+// Icons take their color from the surrounding text color.
+export function Icon({ name, size = 20, className }: IconProps) {
+  const Component = icons[name]
   return (
-    <img
-      src={src}
-      alt=""
+    <Component
       aria-hidden
-      width={size}
-      height={size}
-      draggable={false}
+      size={size}
+      strokeWidth={1.8}
+      absoluteStrokeWidth
       className={cn('shrink-0', className)}
     />
   )

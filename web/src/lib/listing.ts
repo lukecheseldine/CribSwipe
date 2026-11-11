@@ -10,3 +10,8 @@ export function isJustListed(listing: Listing, now = Date.now()) {
 export function getLocality(listing: Listing) {
   return [listing.city, listing.postalCode].filter(Boolean).join(', ') || null
 }
+
+/** Street address and locality on one line, e.g. "369 Dollarton Hwy · North Vancouver, V7G 2A2". */
+export function getFullAddress(listing: Listing) {
+  return [listing.address, getLocality(listing)].filter(Boolean).join(' · ') || null
+}

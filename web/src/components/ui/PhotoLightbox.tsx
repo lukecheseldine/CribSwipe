@@ -15,7 +15,7 @@ type PhotoLightboxProps = {
 export function PhotoLightbox({ open, onClose, photos, carousel, title }: PhotoLightboxProps) {
   useKeyboardShortcuts(
     { ArrowLeft: carousel.previous, ArrowRight: carousel.next },
-    { enabled: open }
+    { enabled: open, withinDialogs: true }
   )
 
   return (
@@ -34,7 +34,7 @@ export function PhotoLightbox({ open, onClose, photos, carousel, title }: PhotoL
         {carousel.index + 1} / {carousel.count}
       </p>
       <IconButton
-        icon="close"
+        icon="x"
         label="Close full-screen"
         onClick={onClose}
         className="absolute top-6 right-6"

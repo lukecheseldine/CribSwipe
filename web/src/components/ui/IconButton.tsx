@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes } from 'react'
-import type { IconName } from '../../assets/icons'
 import { cn } from '../../lib/cn'
 import { Icon } from './Icon'
+import type { IconName } from './icons'
 
 type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   icon: IconName
@@ -14,7 +14,7 @@ export function IconButton({ icon, label, type = 'button', className, ...props }
       type={type}
       aria-label={label}
       className={cn(
-        'flex size-11 cursor-pointer items-center justify-center rounded-full border border-line bg-white transition-colors hover:bg-canvas disabled:cursor-not-allowed disabled:opacity-50',
+        'flex size-11 cursor-pointer items-center justify-center rounded-full border border-line bg-white text-ink transition-colors hover:bg-canvas disabled:cursor-not-allowed disabled:opacity-50',
         className
       )}
       {...props}

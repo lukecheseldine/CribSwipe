@@ -1,16 +1,15 @@
 import type { ReactNode } from 'react'
-import { DiscoverHeader } from './DiscoverHeader'
 
 type DiscoverLayoutProps = {
-  location: string
+  header: ReactNode
   deck: ReactNode
   footer?: ReactNode
 }
 
-export function DiscoverLayout({ location, deck, footer }: DiscoverLayoutProps) {
+export function DiscoverLayout({ header, deck, footer }: DiscoverLayoutProps) {
   return (
     <div className="flex flex-col gap-7">
-      <DiscoverHeader location={location} />
+      {header}
       <div className="h-156.5">{deck}</div>
       {footer}
     </div>
