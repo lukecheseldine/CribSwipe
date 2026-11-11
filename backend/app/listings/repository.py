@@ -20,6 +20,19 @@ def list_listings(conn: sqlite3.Connection, limit: int) -> list[dict]:
             LIMIT ?""",
         (limit,),
     ).fetchall()
+    return _with_photos(conn, rows)
+
+
+def get_listing(conn: sqlite3.Connection, listing_id: str) -> dict | None:
+    row = conn.execute(
+        f"SELECT {LISTING_COLUMNS} FROM listings WHERE id = ?", (listing_id,)
+    ).fetchone()
+    if row is None:
+        return None
+    return _with_photos(conn, [row])[0]
+
+
+def _with_photos(conn: sqlite3.Connection, rows: list[sqlite3.Row]) -> list[dict]:
     listings = [{**dict(row), "photos": []} for row in rows]
     if not listings:
         return listings

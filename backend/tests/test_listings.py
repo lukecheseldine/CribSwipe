@@ -53,6 +53,25 @@ def test_respects_limit(db, client):
     assert len(client.get("/api/listings?limit=2").json()["listings"]) == 2
 
 
+def test_gets_one_listing_with_display_photos(db, client):
+    store.save_detail(
+        db,
+        "unit",
+        make_detail(photos=["https://images.craigslist.org/a_600x450.jpg"], photo_count=1),
+    )
+    db.commit()
+
+    response = client.get("/api/listings/unit")
+
+    assert response.status_code == 200
+    assert response.json()["id"] == "unit"
+    assert response.json()["photos"] == ["https://images.craigslist.org/a_1200x900.jpg"]
+
+
+def test_unknown_listing_returns_404(db, client):
+    assert client.get("/api/listings/missing").status_code == 404
+
+
 def test_missing_database_returns_503(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, client):
     monkeypatch.setattr(config, "DB_PATH", tmp_path / "missing.db")
 
