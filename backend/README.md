@@ -14,7 +14,8 @@ python ../data-collector/main.py --limit 25   # populate data-collector/listings
 ./venv/bin/python -m pytest
 ```
 
-Set `CRIBSWIPE_DB_PATH` to point at a different database file.
+Set `CRIBSWIPE_DB_PATH` to point at a different listings database. Accounts live in
+`backend/cribswipe.db` (gitignored); set `CRIBSWIPE_APP_DB_PATH` to move that file.
 
 The web dev server (`npm run dev` in `web/`) proxies `/api` to this service.
 
@@ -30,6 +31,14 @@ The web dev server (`npm run dev` in `web/`) proxies `/api` to this service.
   each with how many listings have it. Rent, size, and room-count scales are fixed in the
   clients so a saved search does not move when listings change.
 - `GET /api/listings/{id}` — one listing in the same shape, or `404` if the id is unknown.
+- `POST /api/auth/signup` and `POST /api/auth/login` — email or mobile number plus a password.
+  A session cookie is set. Apple, Google, and texted verification codes are not connected.
+- `POST /api/auth/logout` — clears the session cookie.
+- `GET /api/account` — the signed-in profile, default filters, and shortlist. `401` when signed out.
+- `PUT /api/account/profile`, `PUT /api/account/filters`, `POST /api/account/shortlist`, and
+  `DELETE /api/account/shortlist/{listing_id}` — update that account. Move-in date, pet friendly,
+  and amenities are stored with the default search and are not applied to listings until the
+  scraper collects them.
 
 ## Layout
 
@@ -38,6 +47,7 @@ app/
   main.py               FastAPI app; mounts feature routers
   config.py             Environment-driven settings
   db.py                 Read-only SQLite connection dependency
+  accounts/             Users, sessions, default filters, and shortlists
   listings/
     routes.py           HTTP layer
     repository.py       SQL against the collector's schema
