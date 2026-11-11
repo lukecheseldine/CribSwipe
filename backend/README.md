@@ -27,8 +27,8 @@ The web dev server (`npm run dev` in `web/`) proxies `/api` to this service.
   with an unknown value for a filtered field are left out.
 - `GET /api/listings/count` — `{"count": n}` for the same filters, e.g. for "Show 12 places".
 - `GET /api/listings/filter-options` — the cities, property types, bedroom and bathroom counts
-  present in the data (each with how many listings have it) and the price range, for building
-  filter controls.
+  present in the data (each with how many listings have it), plus the price and square-footage
+  ranges, for building filter controls.
 - `GET /api/listings/{id}` — one listing in the same shape, or `404` if the id is unknown.
 
 ## Layout

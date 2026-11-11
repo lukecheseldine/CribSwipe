@@ -73,6 +73,9 @@ def filter_options(conn: sqlite3.Connection) -> dict:
     prices = conn.execute(
         f"SELECT MIN(price_cad), MAX(price_cad) FROM listings WHERE {DISTINCT_UNITS}"
     ).fetchone()
+    sizes = conn.execute(
+        f"SELECT MIN(sqft), MAX(sqft) FROM listings WHERE {DISTINCT_UNITS}"
+    ).fetchone()
     return {
         "cities": counts("city", "count DESC, value"),
         "property_types": counts("property_type", "count DESC, value"),
@@ -80,6 +83,8 @@ def filter_options(conn: sqlite3.Connection) -> dict:
         "bathrooms": counts("bathrooms", "value"),
         "min_price": prices[0],
         "max_price": prices[1],
+        "min_sqft": sizes[0],
+        "max_sqft": sizes[1],
     }
 
 

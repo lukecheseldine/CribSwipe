@@ -94,4 +94,6 @@ def test_filter_options_reflect_the_data(client):
         ],
         "min_price": 1500,
         "max_price": 4800,
+        "min_sqft": 450,
+        "max_sqft": 1600,
     }

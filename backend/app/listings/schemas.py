@@ -49,3 +49,5 @@ class FilterOptions(BaseModel):
     bathrooms: list[BathroomOption]
     min_price: int | None
     max_price: int | None
+    min_sqft: int | None
+    max_sqft: int | None
