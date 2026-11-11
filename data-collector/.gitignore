@@ -1,0 +1,3 @@
+# Local scrape databases are build artifacts, not source.
+*.db
+*.db-journal
