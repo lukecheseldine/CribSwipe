@@ -4,10 +4,16 @@ import { accountStore } from '../features/account/accountStore'
 import { defaultsAreSkipped } from '../features/account/defaultFilters'
 import { discoverPath } from './paths'
 import { countActiveFilters, parseFilters } from '../lib/filters'
+import { loadSession } from './session'
 
 const filtersFrom = (request: Request) => parseFilters(new URL(request.url).searchParams)
 
+export function sessionLoader() {
+  return loadSession()
+}
+
 export async function discoverLoader({ request }: LoaderFunctionArgs) {
+  await loadSession()
   const url = new URL(request.url)
   const defaults = accountStore.getSnapshot().defaultFilters
   if (url.search === '' && !defaultsAreSkipped() && countActiveFilters(defaults) > 0) {

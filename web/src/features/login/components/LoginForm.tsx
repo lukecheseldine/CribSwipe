@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
+import { ApiError, login } from '../../../api/account'
 import { paths } from '../../../app/paths'
 import { buttonClasses } from '../../../components/ui/buttonStyles'
 import { Icon } from '../../../components/ui/Icon'
@@ -12,12 +13,13 @@ import { PasswordField } from './PasswordField'
 const unavailable = 'This isn’t connected yet.'
 
 export function LoginForm() {
+  const navigate = useNavigate()
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<{ identifier?: string; password?: string }>({})
   const [notice, setNotice] = useState<string | null>(null)
 
-  const onSubmit = (event: FormEvent) => {
+  const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
     const next: typeof errors = {}
     if (!identifier.trim()) next.identifier = 'Enter your email or mobile number.'
@@ -26,11 +28,16 @@ export function LoginForm() {
     }
     if (!password) next.password = 'Enter your password.'
     setErrors(next)
-    setNotice(
-      Object.keys(next).length > 0
-        ? null
-        : 'Sign-in isn’t available yet. A mobile number here will match the sign-up flow.'
-    )
+    if (Object.keys(next).length > 0) {
+      setNotice(null)
+      return
+    }
+    try {
+      await login({ identifier, password })
+      navigate(paths.discover)
+    } catch (error) {
+      setNotice(error instanceof ApiError ? error.message : 'Something went wrong. Try again.')
+    }
   }
 
   return (

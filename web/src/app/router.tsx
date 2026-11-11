@@ -13,7 +13,14 @@ import { PrivacyPage } from '../pages/PrivacyPage'
 import { ShortlistPage } from '../pages/ShortlistPage'
 import { SignupPage } from '../pages/SignupPage'
 import { TermsPage } from '../pages/TermsPage'
-import { accountLoader, discoverLoader, filtersLoader, listingLoader, loginLoader } from './loaders'
+import {
+  accountLoader,
+  discoverLoader,
+  filtersLoader,
+  listingLoader,
+  loginLoader,
+  sessionLoader,
+} from './loaders'
 import { paths } from './paths'
 
 export const router = createBrowserRouter([
@@ -24,6 +31,7 @@ export const router = createBrowserRouter([
   { path: paths.privacy, element: <PrivacyPage /> },
   {
     element: <AppLayout />,
+    loader: sessionLoader,
     children: [
       {
         path: paths.discover,

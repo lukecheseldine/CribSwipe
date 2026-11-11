@@ -42,9 +42,10 @@ src/
   survive reloads and can be shared. Edit them on `/filters`; Discover reads them from the same
   query string. Move-in date, pet friendly, and amenities are stored in the URL for later but are
   not sent to the API until the scraper collects them.
-- **Browser storage until accounts exist.** The shortlist (`localStorage`) and Discover's pass/like
-  history (`sessionStorage`) are built on `lib/createStorageStore.ts`; swap
-  `features/shortlist/shortlistStore.ts` for API calls when accounts land.
+- **Signed-in data lives on the account API.** Profile, default filters, and the shortlist come
+  from `GET /api/account` once the session cookie is set. A guest can still browse, and guest likes
+  stay in `localStorage` until the next sign-in moves them onto the account. Discover's pass/like
+  history stays in `sessionStorage`.
 - **Features import from `components/`, `hooks/`, `lib/`, and `types/` — never from other
   features.** Pages import features through their `index.ts`.
 - **No sample content.** Listings and photos come from the Craigslist scraper (`data-collector/`)

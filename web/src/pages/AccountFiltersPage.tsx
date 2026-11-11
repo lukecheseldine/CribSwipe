@@ -26,8 +26,10 @@ export function AccountFiltersPage() {
         matchCount={matchCount}
         onChange={update}
         onSubmit={() => {
-          saveDefaultFilters(draft)
-          setSaved(true)
+          void saveDefaultFilters(draft).then(
+            () => setSaved(true),
+            () => setSaved(false)
+          )
         }}
         submitLabel="Save default filters"
         footerNote="Discover starts from these the next time you open it."

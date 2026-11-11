@@ -12,7 +12,7 @@ const maxPhotoCharacters = 400_000
 
 type ProfileFormProps = {
   profile: Profile | null
-  onSave: (profile: Profile) => void
+  onSave: (profile: Profile) => void | Promise<void>
 }
 
 export function ProfileForm({ profile, onSave }: ProfileFormProps) {
@@ -40,7 +40,7 @@ export function ProfileForm({ profile, onSave }: ProfileFormProps) {
     reader.readAsDataURL(file)
   }
 
-  const onSubmit = (event: FormEvent) => {
+  const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
     if (name.trim().split(/\s+/).filter(Boolean).length < 2) {
       setError('Enter your first and last name.')
@@ -62,9 +62,14 @@ export function ProfileForm({ profile, onSave }: ProfileFormProps) {
       setSaved(false)
       return
     }
-    onSave({ name: name.trim(), email: email.trim(), phone: phone.trim(), photo })
-    setError(null)
-    setSaved(true)
+    try {
+      await onSave({ name: name.trim(), email: email.trim(), phone: phone.trim(), photo })
+      setError(null)
+      setSaved(true)
+    } catch (caught) {
+      setSaved(false)
+      setError(caught instanceof Error ? caught.message : 'Something went wrong. Try again.')
+    }
   }
 
   return (
@@ -143,7 +148,7 @@ export function ProfileForm({ profile, onSave }: ProfileFormProps) {
         {error && <p className="text-xs text-pass">{error}</p>}
         {saved && (
           <p role="status" className="text-xs text-brand">
-            Saved on this device. It will move to your account once sign-in is connected.
+            Saved.
           </p>
         )}
       </form>

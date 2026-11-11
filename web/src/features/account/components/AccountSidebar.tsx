@@ -15,7 +15,7 @@ const sections: { to: string; label: string; icon: IconName; end?: boolean }[] =
 
 type AccountSidebarProps = {
   profile: Profile | null
-  onSignOut: () => void
+  onSignOut: () => void | Promise<void>
 }
 
 export function AccountSidebar({ profile, onSignOut }: AccountSidebarProps) {
@@ -59,8 +59,7 @@ export function AccountSidebar({ profile, onSignOut }: AccountSidebarProps) {
         <button
           type="button"
           onClick={() => {
-            onSignOut()
-            navigate(paths.discover)
+            void Promise.resolve(onSignOut()).then(() => navigate(paths.discover))
           }}
           className={buttonClasses('secondary', 'text-pass')}
         >

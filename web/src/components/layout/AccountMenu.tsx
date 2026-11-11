@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { paths } from '../../app/paths'
-import { useAccount } from '../../features/account'
+import { signOutSession } from '../../app/session'
 import { cn } from '../../lib/cn'
 import type { User } from '../../types/user'
 import { Avatar } from '../ui/Avatar'
@@ -19,7 +19,6 @@ const guestLinks = [
 export function AccountMenu({ user }: AccountMenuProps) {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
-  const { signOut } = useAccount()
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -75,9 +74,10 @@ export function AccountMenu({ user }: AccountMenuProps) {
               type="button"
               role="menuitem"
               onClick={() => {
-                signOut()
-                setOpen(false)
-                navigate(paths.discover)
+                void signOutSession().then(() => {
+                  setOpen(false)
+                  navigate(paths.discover)
+                })
               }}
               className="block w-full rounded-xl px-3.5 py-2.5 text-left text-sm text-pass hover:bg-canvas"
             >

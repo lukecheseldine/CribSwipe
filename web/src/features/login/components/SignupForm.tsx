@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
+import { ApiError, signup } from '../../../api/account'
 import { paths } from '../../../app/paths'
 import { buttonClasses } from '../../../components/ui/buttonStyles'
 import { Icon } from '../../../components/ui/Icon'
@@ -13,6 +14,7 @@ import { PasswordField } from './PasswordField'
 const unavailable = 'This isn’t connected yet.'
 
 export function SignupForm() {
+  const navigate = useNavigate()
   const [name, setName] = useState('')
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
@@ -21,7 +23,7 @@ export function SignupForm() {
   )
   const [notice, setNotice] = useState<string | null>(null)
 
-  const onSubmit = (event: FormEvent) => {
+  const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
     const next: typeof errors = {}
     if (name.trim().split(/\s+/).length < 2) next.name = 'Enter your first and last name.'
@@ -32,11 +34,16 @@ export function SignupForm() {
     const passwordMessage = passwordError(password, { required: 'Create a password.' })
     if (passwordMessage) next.password = passwordMessage
     setErrors(next)
-    setNotice(
-      Object.keys(next).length > 0
-        ? null
-        : 'Accounts aren’t available yet. A mobile number here will be confirmed by text once sign-up is connected.'
-    )
+    if (Object.keys(next).length > 0) {
+      setNotice(null)
+      return
+    }
+    try {
+      await signup({ name, identifier, password })
+      navigate(paths.discover)
+    } catch (error) {
+      setNotice(error instanceof ApiError ? error.message : 'Something went wrong. Try again.')
+    }
   }
 
   return (
