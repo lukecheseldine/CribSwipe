@@ -26,9 +26,9 @@ The web dev server (`npm run dev` in `web/`) proxies `/api` to this service.
   `bathrooms`, `city`, and `property_type` (e.g. `?bedrooms=1&bedrooms=2&city=Burnaby`). Listings
   with an unknown value for a filtered field are left out.
 - `GET /api/listings/count` — `{"count": n}` for the same filters, e.g. for "Show 12 places".
-- `GET /api/listings/filter-options` — the cities, property types, bedroom and bathroom counts
-  present in the data (each with how many listings have it), plus the price and square-footage
-  ranges, for building filter controls.
+- `GET /api/listings/filter-options` — the cities and property types present in the data,
+  each with how many listings have it. Rent, size, and room-count scales are fixed in the
+  clients so a saved search does not move when listings change.
 - `GET /api/listings/{id}` — one listing in the same shape, or `404` if the id is unknown.
 
 ## Layout

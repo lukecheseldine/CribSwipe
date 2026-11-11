@@ -58,33 +58,25 @@ def get_listing(conn: sqlite3.Connection, listing_id: str) -> dict | None:
 
 
 def filter_options(conn: sqlite3.Connection) -> dict:
-    """The values present in the data, so filters only offer choices that match something."""
+    """Cities and property types present in the data.
 
-    def counts(value: str, order: str) -> list[dict]:
+    Rent, size, and room counts are fixed in the clients. Deriving those scales from
+    the current listings would move a saved filter when a listing is taken down.
+    """
+
+    def counts(value: str) -> list[dict]:
         rows = conn.execute(
             f"""SELECT {value} AS value, COUNT(*) AS count
                 FROM listings
                 WHERE {DISTINCT_UNITS} AND TRIM(COALESCE({value}, '')) != ''
                 GROUP BY 1
-                ORDER BY {order}"""
+                ORDER BY count DESC, value"""
         )
         return [dict(row) for row in rows]
 
-    prices = conn.execute(
-        f"SELECT MIN(price_cad), MAX(price_cad) FROM listings WHERE {DISTINCT_UNITS}"
-    ).fetchone()
-    sizes = conn.execute(
-        f"SELECT MIN(sqft), MAX(sqft) FROM listings WHERE {DISTINCT_UNITS}"
-    ).fetchone()
     return {
-        "cities": counts("city", "count DESC, value"),
-        "property_types": counts("property_type", "count DESC, value"),
-        "bedrooms": counts(BEDROOMS, "value"),
-        "bathrooms": counts("bathrooms", "value"),
-        "min_price": prices[0],
-        "max_price": prices[1],
-        "min_sqft": sizes[0],
-        "max_sqft": sizes[1],
+        "cities": counts("city"),
+        "property_types": counts("property_type"),
     }
 
 

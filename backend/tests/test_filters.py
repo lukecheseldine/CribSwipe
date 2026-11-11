@@ -69,7 +69,7 @@ def test_rejects_negative_filters(client):
 
 
 @pytest.mark.usefixtures("listings")
-def test_filter_options_reflect_the_data(client):
+def test_filter_options_list_places_not_ranges(client):
     response = client.get("/api/listings/filter-options")
 
     assert response.status_code == 200
@@ -83,17 +83,4 @@ def test_filter_options_reflect_the_data(client):
             {"value": "Apartment", "count": 3},
             {"value": "House", "count": 1},
         ],
-        "bedrooms": [
-            {"value": 0, "count": 1},
-            {"value": 2, "count": 1},
-            {"value": 3, "count": 1},
-        ],
-        "bathrooms": [
-            {"value": 1.0, "count": 2},
-            {"value": 2.0, "count": 1},
-        ],
-        "min_price": 1500,
-        "max_price": 4800,
-        "min_sqft": 450,
-        "max_sqft": 1600,
     }

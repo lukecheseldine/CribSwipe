@@ -32,22 +32,6 @@ class FilterOption(BaseModel):
     count: int
 
 
-class CountOption(BaseModel):
-    value: int
-    count: int
-
-
-class BathroomOption(BaseModel):
-    value: float
-    count: int
-
-
 class FilterOptions(BaseModel):
     cities: list[FilterOption]
     property_types: list[FilterOption]
-    bedrooms: list[CountOption]
-    bathrooms: list[BathroomOption]
-    min_price: int | None
-    max_price: int | None
-    min_sqft: int | None
-    max_sqft: int | None
