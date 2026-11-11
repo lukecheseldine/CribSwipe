@@ -22,6 +22,7 @@ The web dev server (`npm run dev` in `web/`) proxies `/api` to this service.
 
 - `GET /api/listings?limit=100` — newest distinct listings (reposts excluded), each with its
   photo URLs in posting order. Returns `503` until the collector has created the database.
+- `GET /api/listings/{id}` — one listing in the same shape, or `404` if the id is unknown.
 
 ## Layout
 
