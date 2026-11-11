@@ -1,22 +1,22 @@
-import { ChoiceChip } from '../../../../components/ui/ChoiceChip'
-import type { FilterOption } from '../../../../types/filters'
+import { ChoiceChip } from '../../../components/ui/ChoiceChip'
+import type { FilterOption } from '../../../types/filters'
 
 type OptionChipsProps<T extends string | number> = {
   name: string
   options: FilterOption<T>[]
   selected: T[]
-  onToggle: (value: T) => void
+  onChange: (selected: T[]) => void
   formatLabel?: (value: T) => string
   /** Off for numeric choices, where "1" beside its count of 9 would read as "19". */
   showCounts?: boolean
 }
 
-/** A multi-choice group of the values found in the data, optionally with listing counts. */
+/** Multi-select chips, led by an "Any" chip that clears them. */
 export function OptionChips<T extends string | number>({
   name,
   options,
   selected,
-  onToggle,
+  onChange,
   formatLabel = String,
   showCounts = true,
 }: OptionChipsProps<T>) {
@@ -24,9 +24,21 @@ export function OptionChips<T extends string | number>({
   const missing = selected
     .filter((value) => !options.some((option) => option.value === value))
     .map((value) => ({ value, count: 0 }))
+  const chipClass = showCounts ? undefined : 'min-w-12 justify-center'
+
+  const toggle = (value: T) =>
+    onChange(selected.includes(value) ? selected.filter((v) => v !== value) : [...selected, value])
 
   return (
     <div className="flex flex-wrap gap-2">
+      <ChoiceChip
+        type="checkbox"
+        checked={selected.length === 0}
+        onChange={() => onChange([])}
+        className={chipClass}
+      >
+        Any
+      </ChoiceChip>
       {[...options, ...missing].map((option) => (
         <ChoiceChip
           key={option.value}
@@ -34,8 +46,8 @@ export function OptionChips<T extends string | number>({
           name={name}
           value={option.value}
           checked={selected.includes(option.value)}
-          onChange={() => onToggle(option.value)}
-          className={showCounts ? undefined : 'min-w-12 justify-center'}
+          onChange={() => toggle(option.value)}
+          className={chipClass}
         >
           {formatLabel(option.value)}
           {showCounts && <span className="text-muted">{option.count}</span>}

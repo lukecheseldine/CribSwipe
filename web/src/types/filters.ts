@@ -2,8 +2,13 @@ export type ListingFilters = {
   maxPrice: number | null
   bedrooms: number[]
   bathrooms: number[]
+  minSqft: number | null
   cities: string[]
   propertyTypes: string[]
+  // Saved with the search but not applied yet: the scraper doesn't collect these.
+  moveInDate: string | null
+  petFriendly: boolean
+  amenities: string[]
 }
 
 export type FilterOption<T extends string | number = string> = {
@@ -11,12 +16,8 @@ export type FilterOption<T extends string | number = string> = {
   count: number
 }
 
-/** The choices present in the scraped data. */
+/** Cities and property types currently in the listings. Numeric scales are fixed separately. */
 export type FilterOptions = {
   cities: FilterOption[]
   propertyTypes: FilterOption[]
-  bedrooms: FilterOption<number>[]
-  bathrooms: FilterOption<number>[]
-  minPrice: number | null
-  maxPrice: number | null
 }

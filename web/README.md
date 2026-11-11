@@ -17,8 +17,8 @@ src/
   api/            Data access; maps API responses (scraper rows) into domain types
   app/            App root, router, and route paths
   pages/          One component per route; composes features, holds no UI details of its own
-  features/       Self-contained product areas (discover/, shortlist/, listing-detail/), each with its own
-                  components/, hooks/, and types.ts, exposed through index.ts
+  features/       Self-contained product areas (discover/, filters/, shortlist/, listing-detail/, login/),
+                  each with its own components/, hooks/, and types.ts, exposed through index.ts
   components/
     ui/           Generic, app-agnostic primitives (Button, Badge, Card, Icon, ...)
     listing/      Listing pieces shared by several features (facts, price, photo)
@@ -38,8 +38,10 @@ src/
 - **Icons by name.** Icons come from [Lucide](https://lucide.dev/icons/) (the set the Figma file
   uses). Register one in `components/ui/icons.ts` and render it with `<Icon name="..." />`; it
   takes its color from the text color (`className="text-brand"`) and its size from `size`.
-- **Filters live in the URL** (`/?beds=1&beds=2&city=Burnaby`, parsed in `lib/filters.ts`) so they survive
-  reloads and can be shared; the Discover loader passes them to `GET /api/listings`.
+- **Filters live in the URL** (`/?beds=1&beds=2&city=Burnaby`, parsed in `lib/filters.ts`) so they
+  survive reloads and can be shared. Edit them on `/filters`; Discover reads them from the same
+  query string. Move-in date, pet friendly, and amenities are stored in the URL for later but are
+  not sent to the API until the scraper collects them.
 - **Browser storage until accounts exist.** The shortlist (`localStorage`) and Discover's pass/like
   history (`sessionStorage`) are built on `lib/createStorageStore.ts`; swap
   `features/shortlist/shortlistStore.ts` for API calls when accounts land.

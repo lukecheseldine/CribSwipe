@@ -1,43 +1,36 @@
-import { Button } from '../../../components/ui/Button'
+import { Link } from 'react-router'
+import { ButtonLink } from '../../../components/ui/ButtonLink'
 import { Icon } from '../../../components/ui/Icon'
 
 type DiscoverHeaderProps = {
   location: string
+  /** The filters page, carrying the current filters so it opens with them. */
+  filtersHref: string
   activeFilterCount?: number
-  /** Omit while filters can't be used (loading or error states). */
-  onOpenFilters?: () => void
 }
 
 export function DiscoverHeader({
   location,
+  filtersHref,
   activeFilterCount = 0,
-  onOpenFilters,
 }: DiscoverHeaderProps) {
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-col gap-2">
-        <button
-          type="button"
-          aria-haspopup="dialog"
+        <Link
+          to={filtersHref}
           aria-label={`Location: ${location}. Change location`}
-          onClick={onOpenFilters}
-          disabled={!onOpenFilters}
-          className="flex cursor-pointer items-center gap-1.5 self-start text-label text-muted disabled:cursor-default"
+          className="flex items-center gap-1.5 self-start text-label text-muted"
         >
           <Icon name="mapPin" size={16} className="text-brand" />
           {location}
           <Icon name="chevronDown" size={14} className="text-ink" />
-        </button>
+        </Link>
         <h1 className="text-4xl leading-heading">Find your place.</h1>
       </div>
-      <Button
-        icon="slidersHorizontal"
-        aria-haspopup="dialog"
-        onClick={onOpenFilters}
-        disabled={!onOpenFilters}
-      >
+      <ButtonLink to={filtersHref} icon="slidersHorizontal">
         {activeFilterCount > 0 ? `Filters · ${activeFilterCount}` : 'Filters'}
-      </Button>
+      </ButtonLink>
     </div>
   )
 }

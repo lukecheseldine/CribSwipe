@@ -26,10 +26,15 @@ export function ShortlistCard({ listing, onRemove }: ShortlistCardProps) {
             <Badge>{listing.propertyType}</Badge>
           </div>
         )}
-        <span className="absolute top-5 right-5 flex size-11 items-center justify-center rounded-full bg-brand text-white">
-          <Icon name="heart" />
-          <span className="sr-only">Saved</span>
-        </span>
+        <button
+          type="button"
+          onClick={onRemove}
+          aria-label="Remove from shortlist"
+          className="group absolute top-5 right-5 flex size-11 cursor-pointer items-center justify-center rounded-full bg-brand text-white transition-colors hover:bg-[#f8e8e6] hover:text-[#c44536] focus-visible:bg-[#f8e8e6] focus-visible:text-[#c44536] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c44536]"
+        >
+          <Icon name="heart" className="group-hover:hidden group-focus-visible:hidden" />
+          <Icon name="heartCrack" className="hidden group-hover:block group-focus-visible:block" />
+        </button>
       </div>
 
       <div className="flex flex-col gap-5 p-7">

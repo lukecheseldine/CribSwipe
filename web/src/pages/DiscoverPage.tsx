@@ -1,34 +1,26 @@
-import { useState } from 'react'
 import { preload } from 'react-dom'
 import { useLoaderData, useSearchParams } from 'react-router'
 import { listingsRegion } from '../api/listings'
 import type { discoverLoader } from '../app/loaders'
-import { Button } from '../components/ui/Button'
+import { filtersPath, paths } from '../app/paths'
+import { ButtonLink } from '../components/ui/ButtonLink'
 import {
   DeckMessage,
   DiscoverFooter,
   DiscoverHeader,
   DiscoverLayout,
-  FiltersDialog,
   ListingCard,
   useDecisionDeck,
   type Decision,
 } from '../features/discover'
+import { skipDefaultFilters } from '../features/account'
 import { useShortlist } from '../features/shortlist'
-import {
-  countActiveFilters,
-  describeLocation,
-  emptyFilters,
-  parseFilters,
-  toSearchParams,
-} from '../lib/filters'
-import type { ListingFilters } from '../types/filters'
+import { countActiveFilters, describeLocation, emptyFilters, parseFilters } from '../lib/filters'
 import type { Listing } from '../types/listing'
 
 export function DiscoverPage() {
-  const { listings, filterOptions } = useLoaderData<typeof discoverLoader>()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [filtersOpen, setFiltersOpen] = useState(false)
+  const { listings } = useLoaderData<typeof discoverLoader>()
+  const [searchParams] = useSearchParams()
   const filters = parseFilters(searchParams)
   const activeFilterCount = countActiveFilters(filters)
 
@@ -42,60 +34,54 @@ export function DiscoverPage() {
     decide(listing.id, decision)
   }
 
-  const applyFilters = (next: ListingFilters) => {
-    setSearchParams(toSearchParams(next))
-    setFiltersOpen(false)
-  }
-
   const nextPhoto = upcoming?.photos[0]
   if (nextPhoto) preload(nextPhoto, { as: 'image' })
 
-  const clearFilters = <Button onClick={() => applyFilters(emptyFilters)}>Clear filters</Button>
+  const clearFilters = (
+    <ButtonLink to={paths.discover} onClick={() => skipDefaultFilters()}>
+      Clear filters
+    </ButtonLink>
+  )
 
   return (
-    <>
-      <DiscoverLayout
-        header={
-          <DiscoverHeader
-            location={describeLocation(filters, listingsRegion)}
-            activeFilterCount={activeFilterCount}
-            onOpenFilters={() => setFiltersOpen(true)}
+    <DiscoverLayout
+      header={
+        <DiscoverHeader
+          location={describeLocation(filters, listingsRegion)}
+          filtersHref={filtersPath(filters)}
+          activeFilterCount={activeFilterCount}
+        />
+      }
+      deck={
+        current ? (
+          <ListingCard
+            key={current.id}
+            listing={current}
+            onDecision={(decision) => onDecision(current, decision)}
           />
-        }
-        deck={
-          current ? (
-            <ListingCard
-              key={current.id}
-              listing={current}
-              onDecision={(decision) => onDecision(current, decision)}
-            />
-          ) : activeFilterCount === 0 ? (
-            <DeckMessage>You&rsquo;ve seen every apartment here.</DeckMessage>
-          ) : listings.length === 0 ? (
-            <DeckMessage action={clearFilters}>No apartments match these filters.</DeckMessage>
-          ) : (
-            <DeckMessage action={clearFilters}>
-              You&rsquo;ve seen every apartment that matches these filters.
-            </DeckMessage>
-          )
-        }
-        footer={<DiscoverFooter canUndo={canUndoPass} onUndo={undoLastPass} />}
-      />
-      <FiltersDialog
-        open={filtersOpen}
-        onClose={() => setFiltersOpen(false)}
-        filters={filters}
-        options={filterOptions}
-        onApply={applyFilters}
-      />
-    </>
+        ) : activeFilterCount === 0 ? (
+          <DeckMessage>You&rsquo;ve seen every apartment here.</DeckMessage>
+        ) : listings.length === 0 ? (
+          <DeckMessage action={clearFilters}>No apartments match these filters.</DeckMessage>
+        ) : (
+          <DeckMessage action={clearFilters}>
+            You&rsquo;ve seen every apartment that matches these filters.
+          </DeckMessage>
+        )
+      }
+      footer={<DiscoverFooter canUndo={canUndoPass} onUndo={undoLastPass} />}
+    />
   )
 }
+
+const defaultHeader = (
+  <DiscoverHeader location={listingsRegion} filtersHref={filtersPath(emptyFilters)} />
+)
 
 export function DiscoverLoading() {
   return (
     <DiscoverLayout
-      header={<DiscoverHeader location={listingsRegion} />}
+      header={defaultHeader}
       deck={<DeckMessage>Loading apartments&hellip;</DeckMessage>}
     />
   )
@@ -104,7 +90,7 @@ export function DiscoverLoading() {
 export function DiscoverError() {
   return (
     <DiscoverLayout
-      header={<DiscoverHeader location={listingsRegion} />}
+      header={defaultHeader}
       deck={<DeckMessage>We couldn&rsquo;t load apartments. Try again in a moment.</DeckMessage>}
     />
   )

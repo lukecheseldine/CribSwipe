@@ -8,10 +8,6 @@ export const listingsRegion = 'Vancouver, BC'
 type ApiFilterOptions = {
   cities: FilterOption[]
   property_types: FilterOption[]
-  bedrooms: FilterOption<number>[]
-  bathrooms: FilterOption<number>[]
-  min_price: number | null
-  max_price: number | null
 }
 
 type ApiListing = {
@@ -60,9 +56,11 @@ function toListing(row: ApiListing): Listing {
   }
 }
 
+// Move-in date, pet friendly, and amenities aren't sent: the scraper doesn't collect them yet.
 function toQuery(filters: ListingFilters) {
   const query = new URLSearchParams()
   if (filters.maxPrice !== null) query.set('max_price', String(filters.maxPrice))
+  if (filters.minSqft !== null) query.set('min_sqft', String(filters.minSqft))
   const lists = {
     bedrooms: filters.bedrooms,
     bathrooms: filters.bathrooms,
@@ -83,6 +81,13 @@ export async function getListings(filters: ListingFilters = emptyFilters): Promi
   return body.listings.map(toListing)
 }
 
+export async function getListingCount(filters: ListingFilters, signal?: AbortSignal) {
+  const response = await fetch(`/api/listings/count?${toQuery(filters)}`, { signal })
+  if (!response.ok) throw new Error(`Failed to count listings (${response.status})`)
+  const body: { count: number } = await response.json()
+  return body.count
+}
+
 export async function getFilterOptions(): Promise<FilterOptions> {
   const response = await fetch('/api/listings/filter-options')
   if (!response.ok) throw new Error(`Failed to load filter options (${response.status})`)
@@ -90,10 +95,6 @@ export async function getFilterOptions(): Promise<FilterOptions> {
   return {
     cities: body.cities,
     propertyTypes: body.property_types,
-    bedrooms: body.bedrooms,
-    bathrooms: body.bathrooms,
-    minPrice: body.min_price,
-    maxPrice: body.max_price,
   }
 }
 
