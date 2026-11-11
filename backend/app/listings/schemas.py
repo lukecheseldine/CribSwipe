@@ -21,3 +21,15 @@ class Listing(BaseModel):
 
 class ListingsResponse(BaseModel):
     listings: list[Listing]
+
+
+class FilterOption(BaseModel):
+    value: str
+    count: int
+
+
+class FilterOptions(BaseModel):
+    cities: list[FilterOption]
+    property_types: list[FilterOption]
+    min_price: int | None
+    max_price: int | None
