@@ -4,6 +4,9 @@ import bedDouble from './bed-double.svg'
 import brandMark from './brand-mark.svg'
 import chevronDownSm from './chevron-down-sm.svg'
 import chevronDown from './chevron-down.svg'
+import chevronLeft from './chevron-left.svg'
+import chevronRight from './chevron-right.svg'
+import close from './close.svg'
 import heartMuted from './heart-muted.svg'
 import heartWhite from './heart-white.svg'
 import layers from './layers.svg'
@@ -16,7 +19,7 @@ import undo from './undo-2.svg'
 import userRound from './user-round.svg'
 import x from './x.svg'
 
-// Each SVG is exported from Figma with its color and size baked in; `size` must match the file's root width/height.
+// Each SVG has its color and size baked in; `size` must match the file's root width/height.
 export const icons = {
   arrowRight: { src: arrowRight, size: 20 },
   bath: { src: bath, size: 18 },
@@ -24,6 +27,9 @@ export const icons = {
   brandMark: { src: brandMark, size: 42 },
   chevronDown: { src: chevronDown, size: 16 },
   chevronDownSm: { src: chevronDownSm, size: 14 },
+  chevronLeft: { src: chevronLeft, size: 20 },
+  chevronRight: { src: chevronRight, size: 20 },
+  close: { src: close, size: 20 },
   heartMuted: { src: heartMuted, size: 20 },
   heartWhite: { src: heartWhite, size: 20 },
   layers: { src: layers, size: 20 },
