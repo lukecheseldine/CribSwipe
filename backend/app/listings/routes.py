@@ -2,6 +2,7 @@ import sqlite3
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from pydantic import Field
 
 from ..db import get_db
 from . import repository
@@ -25,16 +26,16 @@ def list_listings(
     limit: Annotated[int, Query(ge=1, le=500)] = 100,
     min_price: Annotated[int | None, Query(ge=0)] = None,
     max_price: Annotated[int | None, Query(ge=0)] = None,
-    min_bedrooms: Annotated[int | None, Query(ge=0)] = None,
-    min_bathrooms: Annotated[float | None, Query(ge=0)] = None,
+    bedrooms: Annotated[list[Annotated[int, Field(ge=0)]], Query()] = [],
+    bathrooms: Annotated[list[Annotated[float, Field(ge=0)]], Query()] = [],
     city: Annotated[list[str], Query()] = [],
     property_type: Annotated[list[str], Query()] = [],
 ) -> ListingsResponse:
     filters = repository.ListingFilters(
         min_price=min_price,
         max_price=max_price,
-        min_bedrooms=min_bedrooms,
-        min_bathrooms=min_bathrooms,
+        bedrooms=tuple(bedrooms),
+        bathrooms=tuple(bathrooms),
         cities=tuple(city),
         property_types=tuple(property_type),
     )

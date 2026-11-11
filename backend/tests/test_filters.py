@@ -29,11 +29,14 @@ def ids(client, query: str) -> set[str]:
     ("query", "expected"),
     [
         ("min_price=2000&max_price=3000", {"two-bed-burnaby", "unknown-beds"}),
-        ("min_bedrooms=2", {"two-bed-burnaby", "house-north-van"}),
-        ("min_bathrooms=2", {"house-north-van"}),
+        ("max_price=2600", {"studio-van", "two-bed-burnaby", "unknown-beds"}),
+        ("bedrooms=2", {"two-bed-burnaby"}),
+        ("bedrooms=0&bedrooms=3", {"studio-van", "house-north-van"}),
+        ("bathrooms=2", {"house-north-van"}),
+        ("bathrooms=1&bathrooms=2", {"studio-van", "two-bed-burnaby", "house-north-van"}),
         ("city=Burnaby&city=Vancouver", {"studio-van", "two-bed-burnaby", "unknown-beds"}),
         ("property_type=House", {"house-north-van"}),
-        ("city=Burnaby&min_bedrooms=1", {"two-bed-burnaby"}),
+        ("city=Burnaby&bedrooms=2&bedrooms=3", {"two-bed-burnaby"}),
     ],
 )
 def test_filters_listings(client, query, expected):
@@ -43,6 +46,7 @@ def test_filters_listings(client, query, expected):
 @pytest.mark.usefixtures("listings")
 def test_rejects_negative_filters(client):
     assert client.get("/api/listings?min_price=-1").status_code == 422
+    assert client.get("/api/listings?bedrooms=-1").status_code == 422
 
 
 @pytest.mark.usefixtures("listings")
@@ -59,6 +63,15 @@ def test_filter_options_reflect_the_data(client):
         "property_types": [
             {"value": "Apartment", "count": 3},
             {"value": "House", "count": 1},
+        ],
+        "bedrooms": [
+            {"value": 0, "count": 1},
+            {"value": 2, "count": 1},
+            {"value": 3, "count": 1},
+        ],
+        "bathrooms": [
+            {"value": 1.0, "count": 2},
+            {"value": 2.0, "count": 1},
         ],
         "min_price": 1500,
         "max_price": 4800,

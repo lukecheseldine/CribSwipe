@@ -22,11 +22,12 @@ The web dev server (`npm run dev` in `web/`) proxies `/api` to this service.
 
 - `GET /api/listings?limit=100` — newest distinct listings (reposts excluded), each with its
   photo URLs in posting order. Returns `503` until the collector has created the database.
-  Optional filters: `min_price`, `max_price`, `min_bedrooms`, `min_bathrooms`, and repeatable
-  `city` and `property_type` (e.g. `?city=Burnaby&city=Vancouver`). Listings with an unknown
-  value for a filtered field are left out.
-- `GET /api/listings/filter-options` — the cities and property types present in the data (with
-  counts) and the price range, for building filter controls.
+  Optional filters: `min_price`, `max_price`, and repeatable exact-match `bedrooms`, `bathrooms`,
+  `city`, and `property_type` (e.g. `?bedrooms=1&bedrooms=2&city=Burnaby`). Listings with an
+  unknown value for a filtered field are left out.
+- `GET /api/listings/filter-options` — the cities, property types, bedroom and bathroom counts
+  present in the data (each with how many listings have it) and the price range, for building
+  filter controls.
 - `GET /api/listings/{id}` — one listing in the same shape, or `404` if the id is unknown.
 
 ## Layout

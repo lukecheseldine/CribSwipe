@@ -10,6 +10,9 @@ LISTING_COLUMNS = (
 # Reposts (rows with a canonical_id) are excluded so each unit appears once.
 DISTINCT_UNITS = "canonical_id IS NULL"
 
+# The collector stores bedrooms as text (from the listing's JSON-LD).
+BEDROOMS = "CAST(bedrooms AS INTEGER)"
+
 
 @dataclass(frozen=True)
 class ListingFilters:
@@ -17,8 +20,8 @@ class ListingFilters:
 
     min_price: int | None = None
     max_price: int | None = None
-    min_bedrooms: int | None = None
-    min_bathrooms: float | None = None
+    bedrooms: tuple[int, ...] = ()
+    bathrooms: tuple[float, ...] = ()
     cities: tuple[str, ...] = ()
     property_types: tuple[str, ...] = ()
 
@@ -51,13 +54,13 @@ def get_listing(conn: sqlite3.Connection, listing_id: str) -> dict | None:
 def filter_options(conn: sqlite3.Connection) -> dict:
     """The values present in the data, so filters only offer choices that match something."""
 
-    def counts(column: str) -> list[dict]:
+    def counts(value: str, order: str) -> list[dict]:
         rows = conn.execute(
-            f"""SELECT {column} AS value, COUNT(*) AS count
+            f"""SELECT {value} AS value, COUNT(*) AS count
                 FROM listings
-                WHERE {DISTINCT_UNITS} AND TRIM(COALESCE({column}, '')) != ''
-                GROUP BY {column}
-                ORDER BY count DESC, value"""
+                WHERE {DISTINCT_UNITS} AND TRIM(COALESCE({value}, '')) != ''
+                GROUP BY 1
+                ORDER BY {order}"""
         )
         return [dict(row) for row in rows]
 
@@ -65,8 +68,10 @@ def filter_options(conn: sqlite3.Connection) -> dict:
         f"SELECT MIN(price_cad), MAX(price_cad) FROM listings WHERE {DISTINCT_UNITS}"
     ).fetchone()
     return {
-        "cities": counts("city"),
-        "property_types": counts("property_type"),
+        "cities": counts("city", "count DESC, value"),
+        "property_types": counts("property_type", "count DESC, value"),
+        "bedrooms": counts(BEDROOMS, "value"),
+        "bathrooms": counts("bathrooms", "value"),
         "min_price": prices[0],
         "max_price": prices[1],
     }
@@ -84,11 +89,10 @@ def _where(filters: ListingFilters) -> tuple[str, list]:
         add("price_cad >= ?", filters.min_price)
     if filters.max_price is not None:
         add("price_cad <= ?", filters.max_price)
-    # The collector stores bedrooms as text (from the listing's JSON-LD).
-    if filters.min_bedrooms is not None:
-        add("CAST(bedrooms AS INTEGER) >= ?", filters.min_bedrooms)
-    if filters.min_bathrooms is not None:
-        add("bathrooms >= ?", filters.min_bathrooms)
+    if filters.bedrooms:
+        add(f"{BEDROOMS} IN ({_placeholders(filters.bedrooms)})", *filters.bedrooms)
+    if filters.bathrooms:
+        add(f"bathrooms IN ({_placeholders(filters.bathrooms)})", *filters.bathrooms)
     if filters.cities:
         add(f"city IN ({_placeholders(filters.cities)})", *filters.cities)
     if filters.property_types:
