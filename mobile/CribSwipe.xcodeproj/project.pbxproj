@@ -1,0 +1,281 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2285DE515D9B37F38019859A /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10968CDFB59B5325B445F601 /* APIClient.swift */; };
+		E6F2F9B0CBA73658AF75554B /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B360D48D2B9402B6ABC93686 /* AppModel.swift */; };
+		9595D27CF8C8B0C9C47AB807 /* AuthViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C97EE281540BA36E18E7DEB /* AuthViews.swift */; };
+		2242E04DC5C060B449F52C8A /* CribSwipeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403D9839D042EAB950DB53E7 /* CribSwipeApp.swift */; };
+		A660BE5883CBA95ECCB915D4 /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C10DE8C6CF71847D8DCCB372 /* DiscoverView.swift */; };
+		CD1ABE5C886E1C3DFFC26AE1 /* FiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AD4C5A54D842B7D8AA5251 /* FiltersView.swift */; };
+		8EDFFBEC7A5B27FDB1003EFF /* ListingDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 628A3AC8CCFAC000C969D75E /* ListingDetailView.swift */; };
+		D1B1E93CC8825EE71A6BC9AF /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CD9180C8097BF792EBACA5 /* Models.swift */; };
+		9827F2AC4362EA90319533FB /* SettingsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7167B7CF035745234F1B8249 /* SettingsViews.swift */; };
+		D903A021E7BBE9117049492C /* ShortlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67405135186D91C18FF09EB7 /* ShortlistView.swift */; };
+		2AC22BF20FA2818462FFC0C5 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DDC9063104CE345A04BC149 /* Theme.swift */; };
+		F0C3048B9C4C204F3473B058 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C63E8D8E7BA2176C1DD0B782 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		38A007151ABE87CC01A5B6E9 /* CribSwipe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CribSwipe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		10968CDFB59B5325B445F601 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		B360D48D2B9402B6ABC93686 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		3C97EE281540BA36E18E7DEB /* AuthViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViews.swift; sourceTree = "<group>"; };
+		403D9839D042EAB950DB53E7 /* CribSwipeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CribSwipeApp.swift; sourceTree = "<group>"; };
+		C10DE8C6CF71847D8DCCB372 /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
+		55AD4C5A54D842B7D8AA5251 /* FiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersView.swift; sourceTree = "<group>"; };
+		628A3AC8CCFAC000C969D75E /* ListingDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailView.swift; sourceTree = "<group>"; };
+		41CD9180C8097BF792EBACA5 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		7167B7CF035745234F1B8249 /* SettingsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViews.swift; sourceTree = "<group>"; };
+		67405135186D91C18FF09EB7 /* ShortlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortlistView.swift; sourceTree = "<group>"; };
+		9DDC9063104CE345A04BC149 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		7AA13EA2BDF92B53E29383E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C63E8D8E7BA2176C1DD0B782 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		68ED96E173B8E85EFF925036 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		265994BF137919F08007EFB9 /* CribSwipe */ = {
+			isa = PBXGroup;
+			children = (
+				10968CDFB59B5325B445F601 /* APIClient.swift */,
+				B360D48D2B9402B6ABC93686 /* AppModel.swift */,
+				3C97EE281540BA36E18E7DEB /* AuthViews.swift */,
+				403D9839D042EAB950DB53E7 /* CribSwipeApp.swift */,
+				C10DE8C6CF71847D8DCCB372 /* DiscoverView.swift */,
+				55AD4C5A54D842B7D8AA5251 /* FiltersView.swift */,
+				628A3AC8CCFAC000C969D75E /* ListingDetailView.swift */,
+				41CD9180C8097BF792EBACA5 /* Models.swift */,
+				7167B7CF035745234F1B8249 /* SettingsViews.swift */,
+				67405135186D91C18FF09EB7 /* ShortlistView.swift */,
+				9DDC9063104CE345A04BC149 /* Theme.swift */,
+				C63E8D8E7BA2176C1DD0B782 /* Assets.xcassets */,
+				7AA13EA2BDF92B53E29383E6 /* Info.plist */,
+			);
+			path = CribSwipe;
+			sourceTree = "<group>";
+		};
+		22EA56DD29576E62BCCCA1AA = {
+			isa = PBXGroup;
+			children = (
+				265994BF137919F08007EFB9 /* CribSwipe */,
+				A511EC6FC8BCAFC6B21CD81D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A511EC6FC8BCAFC6B21CD81D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				38A007151ABE87CC01A5B6E9 /* CribSwipe.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0E8A3AD980EC179856012B7E /* CribSwipe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10353FFBA34E0D8DBB50FF00 /* Build configuration list for PBXNativeTarget "CribSwipe" */;
+			buildPhases = (
+				2A976C55E781D531D45C10A3 /* Sources */,
+				68ED96E173B8E85EFF925036 /* Frameworks */,
+				D358F9953273580C5B97B1E2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CribSwipe;
+			productName = CribSwipe;
+			productReference = 38A007151ABE87CC01A5B6E9 /* CribSwipe.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		98F54143AB4E86B28C3AFEE0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = C74034AE7265F595782FCC65 /* Build configuration list for PBXProject "CribSwipe" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 22EA56DD29576E62BCCCA1AA;
+			productRefGroup = A511EC6FC8BCAFC6B21CD81D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0E8A3AD980EC179856012B7E /* CribSwipe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D358F9953273580C5B97B1E2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0C3048B9C4C204F3473B058 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2A976C55E781D531D45C10A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2285DE515D9B37F38019859A /* APIClient.swift in Sources */,
+				E6F2F9B0CBA73658AF75554B /* AppModel.swift in Sources */,
+				9595D27CF8C8B0C9C47AB807 /* AuthViews.swift in Sources */,
+				2242E04DC5C060B449F52C8A /* CribSwipeApp.swift in Sources */,
+				A660BE5883CBA95ECCB915D4 /* DiscoverView.swift in Sources */,
+				CD1ABE5C886E1C3DFFC26AE1 /* FiltersView.swift in Sources */,
+				8EDFFBEC7A5B27FDB1003EFF /* ListingDetailView.swift in Sources */,
+				D1B1E93CC8825EE71A6BC9AF /* Models.swift in Sources */,
+				9827F2AC4362EA90319533FB /* SettingsViews.swift in Sources */,
+				D903A021E7BBE9117049492C /* ShortlistView.swift in Sources */,
+				2AC22BF20FA2818462FFC0C5 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		B0B56C12A90899E4707AE233 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C2FD164E71C295B24A6638ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DE372D23F833036057BD4E02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CribSwipe/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CribSwipe;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cribswipe.ios;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+
+			};
+			name = Debug;
+		};
+		D50A8E4A1055F64A3F9FCDA0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CribSwipe/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CribSwipe;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cribswipe.ios;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C74034AE7265F595782FCC65 /* Build configuration list for PBXProject "CribSwipe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0B56C12A90899E4707AE233 /* Debug */,
+				C2FD164E71C295B24A6638ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		10353FFBA34E0D8DBB50FF00 /* Build configuration list for PBXNativeTarget "CribSwipe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DE372D23F833036057BD4E02 /* Debug */,
+				D50A8E4A1055F64A3F9FCDA0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 98F54143AB4E86B28C3AFEE0 /* Project object */;
+}
